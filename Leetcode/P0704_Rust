@@ -1,0 +1,51 @@
+Iterative
+
+impl Solution {
+    pub fn search(nums: Vec<i32>, target: i32) -> i32 {
+        let mut left: i32 = 0;
+        let mut right: i32 = (nums.len() as i32) - 1;
+
+        while left <= right {
+            let mid = left + (right - left) / 2;
+            let midv = nums[mid as usize];
+
+            if midv == target {
+                return mid;
+            } else if midv < target {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+
+
+impl Solution {
+    pub fn search(nums: Vec<i32>, target: i32) -> i32 {
+        match nums.binary_search(&target) {
+            Ok(index) => index as i32,
+            Err(_) => -1,
+        }
+    }
+}
+
+
+Recursive
+
+impl Solution {
+    pub fn search(nums: Vec<i32>, target: i32) -> i32 {
+        fn b(nums: &[i32], target: i32, left: i32, right: i32) -> i32 {
+            if left > right {
+                return -1;
+            }
+            let mid = left + (right - left) / 2;
+            if nums[mid as usize] == target {
+                mid
+            } else if nums[mid as usize] < target {
+                b(nums, target, mid + 1, right)
+            } else {
+                b(nums, target, left, mid - 1)
+            }
+        }
+
+        b(&nums, target, 0, (nums.len() as i32) - 1)
+    }
+}
